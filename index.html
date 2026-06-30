@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keamanan & Privasi Digital — Literasi Dasar UMS</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0F2D52;
+    --blue: #1565C0;
+    --blue-light: #E3F2FD;
+    --blue-mid: #BBDEFB;
+    --sky: #4FC3F7;
+    --white: #ffffff;
+    --gray-bg: #F4F6F9;
+    --gray-border: #E0E7EF;
+    --text: #1a2332;
+    --text-secondary: #4a5568;
+    --text-muted: #718096;
+    --green-bg: #E8F5E9;
+    --green-border: #A5D6A7;
+    --green-text: #1B5E20;
+    --orange-bg: #FFF3E0;
+    --orange-border: #FFCC80;
+    --orange-text: #BF360C;
+    --red-bg: #FFEBEE;
+    --red-border: #EF9A9A;
+    --red-text: #B71C1C;
+    --purple-bg: #F3E5F5;
+    --purple-border: #CE93D8;
+    --purple-text: #4A148C;
+    --radius: 10px;
+    --shadow: 0 1px 4px rgba(15,45,82,0.08);
+  }
+
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--gray-bg); color: var(--text); line-height: 1.6; }
+
+  /* NAV */
+  .nav { background: var(--navy); padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.2); min-height: 54px; flex-wrap: wrap; gap: 8px; }
+  .nav-brand { color: #fff; font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px; padding: 8px 0; }
+  .nav-brand i { font-size: 20px; color: var(--sky); }
+  .nav-tabs { display: flex; gap: 2px; flex-wrap: wrap; }
+  .nav-tab { background: transparent; border: none; color: rgba(255,255,255,0.65); font-size: 13px; padding: 8px 13px; border-radius: 6px; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+  .nav-tab:hover { background: rgba(255,255,255,0.1); color: #fff; }
+  .nav-tab.active { background: rgba(79,195,247,0.2); color: var(--sky); font-weight: 600; }
+
+  /* PAGES */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, #0F2D52 0%, #1565C0 55%, #0288D1 100%); color: #fff; padding: 3.5rem 2rem 3rem; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.04) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(79,195,247,0.08) 0%, transparent 40%); }
+  .hero-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(79,195,247,0.15); border: 1px solid rgba(79,195,247,0.35); color: var(--sky); font-size: 12px; font-weight: 600; padding: 5px 14px; border-radius: 20px; margin-bottom: 1.25rem; position: relative; letter-spacing: 0.04em; }
+  .hero h1 { font-size: 32px; font-weight: 700; line-height: 1.25; margin-bottom: 0.875rem; position: relative; }
+  .hero h1 span { color: var(--sky); }
+  .hero-desc { font-size: 15px; color: rgba(255,255,255,0.82); max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.7; position: relative; }
+  .hero-stats { display: flex; gap: 2rem; justify-content: center; position: relative; flex-wrap: wrap; }
+  .hero-stat { text-align: center; }
+  .hero-stat-num { font-size: 28px; font-weight: 700; color: var(--sky); }
+  .hero-stat-label { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+
+  /* SECTIONS */
+  .section { padding: 1.75rem 1.5rem; }
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.875rem; display: flex; align-items: center; gap: 6px; }
+  .section-divider { border: none; border-top: 1px solid var(--gray-border); margin: 0; }
+
+  /* TUJUAN */
+  .tujuan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; }
+  .tujuan-card { background: var(--blue-light); border: 1px solid var(--blue-mid); border-radius: var(--radius); padding: 0.875rem 1rem; display: flex; align-items: flex-start; gap: 10px; }
+  .tujuan-icon { width: 34px; height: 34px; background: var(--blue); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .tujuan-icon i { color: #fff; font-size: 17px; }
+  .tujuan-text { font-size: 13px; color: #0D47A1; line-height: 1.55; font-weight: 500; }
+
+  /* DESKRIPSI */
+  .desc-box { background: var(--white); border: 1px solid var(--gray-border); border-radius: var(--radius); padding: 1.25rem 1.5rem; }
+  .desc-box p { font-size: 14px; color: var(--text-secondary); line-height: 1.75; }
+  .btn-primary { display: inline-flex; align-items: center; gap: 6px; background: var(--navy); color: #fff; border: none; padding: 9px 20px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: opacity 0.2s; margin-top: 1rem; font-family: inherit; text-decoration: none; }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-outline { display: inline-flex; align-items: center; gap: 6px; background: transparent; color: var(--blue); border: 1.5px solid var(--blue); padding: 8px 18px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+  .btn-outline:hover { background: var(--blue-light); }
+
+  /* MATERI */
+  .materi-nav { display: flex; gap: 8px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .materi-btn { border: 1.5px solid var(--gray-border); background: var(--white); color: var(--text-secondary); font-size: 13px; font-weight: 500; padding: 7px 16px; border-radius: 20px; cursor: pointer; transition: all 0.2s; font-family: inherit; display: flex; align-items: center; gap: 5px; }
+  .materi-btn:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
+  .materi-btn.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .materi-content { display: none; }
+  .materi-content.active { display: block; }
+  .materi-card { background: var(--white); border: 1px solid var(--gray-border); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 1rem; box-shadow: var(--shadow); }
+  .materi-card h3 { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 0.625rem; display: flex; align-items: center; gap: 8px; }
+  .materi-card h3 i { color: var(--blue); font-size: 20px; }
+  .materi-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.75; }
+  .materi-card ul { margin: 0.625rem 0 0 1.25rem; }
+  .materi-card ul li { font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
+  .tip-box { background: var(--green-bg); border: 1px solid var(--green-border); border-radius: 8px; padding: 0.75rem 1rem; margin-top: 0.875rem; display: flex; gap: 10px; align-items: flex-start; }
+  .tip-box i { color: #2E7D32; font-size: 17px; margin-top: 1px; flex-shrink: 0; }
+  .tip-box span { font-size: 13px; color: var(--green-text); line-height: 1.65; }
+  .warn-box { background: var(--orange-bg); border: 1px solid var(--orange-border); border-radius: 8px; padding: 0.75rem 1rem; margin-top: 0.875rem; display: flex; gap: 10px; align-items: flex-start; }
+  .warn-box i { color: #E65100; font-size: 17px; margin-top: 1px; flex-shrink: 0; }
+  .warn-box span { font-size: 13px; color: var(--orange-text); line-height: 1.65; }
+  .kasus-box { background: var(--purple-bg); border: 1px solid var(--purple-border); border-radius: 10px; padding: 1rem 1.125rem; margin-top: 0.875rem; }
+  .kasus-label { font-size: 11px; font-weight: 700; color: #6A1B9A; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .kasus-box p { font-size: 13px; color: var(--purple-text); line-height: 1.65; }
+  .infografis { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-top: 1rem; }
+  .info-item { background: var(--blue-light); border: 1px solid var(--blue-mid); border-radius: 10px; padding: 0.875rem; text-align: center; }
+  .info-icon { font-size: 30px; margin-bottom: 7px; }
+  .info-title { font-size: 12px; font-weight: 700; color: #0D47A1; }
+  .info-desc { font-size: 11px; color: var(--blue); margin-top: 3px; line-height: 1.45; }
+
+  /* AKTIVITAS */
+  .aktivitas-tabs { display: flex; gap: 8px; margin-bottom: 1.25rem; }
+  .akt-tab { flex: 1; padding: 10px; border: 1.5px solid var(--gray-border); background: var(--white); border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--text-secondary); text-align: center; transition: all 0.2s; font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .akt-tab:hover { border-color: var(--blue); color: var(--blue); }
+  .akt-tab.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .akt-content { display: none; }
+  .akt-content.active { display: block; }
+
+  /* FLASHCARD */
+  .fc-hint { font-size: 12px; color: var(--text-muted); text-align: center; margin-bottom: 0.875rem; }
+  .fc-counter { font-size: 13px; color: var(--text-secondary); text-align: center; margin-bottom: 0.625rem; font-weight: 600; }
+  .flashcard-wrap { perspective: 1200px; margin-bottom: 1.125rem; height: 200px; }
+  .flashcard { width: 100%; height: 200px; position: relative; transform-style: preserve-3d; transition: transform 0.55s cubic-bezier(0.4,0,0.2,1); cursor: pointer; }
+  .flashcard.flipped { transform: rotateY(180deg); }
+  .flashcard-front, .flashcard-back { position: absolute; inset: 0; border-radius: 12px; padding: 1.75rem; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; backface-visibility: hidden; border: 1px solid var(--gray-border); box-shadow: var(--shadow); }
+  .flashcard-front { background: var(--navy); color: #fff; }
+  .flashcard-front .fc-label { font-size: 10px; color: var(--sky); letter-spacing: 0.1em; font-weight: 700; text-transform: uppercase; margin-bottom: 0.625rem; }
+  .flashcard-front .fc-q { font-size: 16px; font-weight: 600; line-height: 1.55; }
+  .flashcard-back { background: var(--blue-light); transform: rotateY(180deg); }
+  .flashcard-back .fc-label { font-size: 10px; color: var(--blue); letter-spacing: 0.1em; font-weight: 700; text-transform: uppercase; margin-bottom: 0.625rem; }
+  .flashcard-back .fc-a { font-size: 14px; line-height: 1.65; color: #0D47A1; }
+  .fc-controls { display: flex; gap: 10px; justify-content: center; }
+
+  /* STUDI KASUS */
+  .sk-card { background: var(--white); border: 1px solid var(--gray-border); border-radius: var(--radius); padding: 1.25rem 1.5rem; box-shadow: var(--shadow); }
+  .sk-scenario { background: var(--orange-bg); border: 1px solid var(--orange-border); border-radius: 8px; padding: 0.875rem 1rem; margin-bottom: 1rem; }
+  .sk-scenario-label { font-size: 10px; font-weight: 700; color: #E65100; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.4rem; }
+  .sk-scenario p { font-size: 14px; color: #BF360C; line-height: 1.65; }
+  .sk-question { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 0.875rem; }
+  .sk-options { display: flex; flex-direction: column; gap: 8px; }
+  .sk-option { border: 1.5px solid var(--gray-border); background: var(--white); border-radius: 8px; padding: 0.875rem 1.125rem; cursor: pointer; font-size: 13px; color: var(--text); text-align: left; transition: all 0.18s; line-height: 1.55; font-family: inherit; font-weight: 500; }
+  .sk-option:hover:not(:disabled) { border-color: var(--blue); background: var(--blue-light); color: #0D47A1; }
+  .sk-option.correct { background: var(--green-bg) !important; border-color: #66BB6A !important; color: var(--green-text) !important; }
+  .sk-option.wrong { background: var(--red-bg) !important; border-color: #EF9A9A !important; color: var(--red-text) !important; }
+  .sk-feedback { border-radius: 8px; padding: 0.875rem 1rem; margin-top: 0.875rem; font-size: 13px; line-height: 1.65; display: none; }
+  .sk-feedback.show-correct { display: block; background: var(--green-bg); color: var(--green-text); border: 1px solid var(--green-border); }
+  .sk-feedback.show-wrong { display: block; background: var(--red-bg); color: var(--red-text); border: 1px solid var(--red-border); }
+  .sk-next-wrap { margin-top: 1rem; display: none; }
+  .sk-next-wrap.visible { display: block; }
+
+  /* EVALUASI */
+  .quiz-progress-bar { height: 5px; background: var(--gray-border); border-radius: 3px; overflow: hidden; margin-bottom: 4px; }
+  .quiz-progress-fill { height: 100%; background: var(--blue); border-radius: 3px; transition: width 0.35s ease; }
+  .quiz-progress-text { font-size: 12px; color: var(--text-muted); margin-bottom: 1rem; font-weight: 600; }
+  .quiz-card { background: var(--white); border: 1px solid var(--gray-border); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 1rem; box-shadow: var(--shadow); }
+  .q-num { font-size: 10px; font-weight: 700; color: var(--blue); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .q-text { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 1rem; line-height: 1.5; }
+  .q-options { display: flex; flex-direction: column; gap: 8px; }
+  .q-option { border: 1.5px solid var(--gray-border); background: var(--white); border-radius: 8px; padding: 0.875rem 1rem; cursor: pointer; font-size: 13px; color: var(--text); text-align: left; display: flex; align-items: center; gap: 10px; transition: all 0.18s; font-family: inherit; font-weight: 500; }
+  .q-option:hover:not(:disabled) { border-color: var(--blue); background: var(--blue-light); color: #0D47A1; }
+  .q-option.correct { background: var(--green-bg) !important; border-color: #66BB6A !important; color: var(--green-text) !important; }
+  .q-option.wrong { background: var(--red-bg) !important; border-color: #EF9A9A !important; color: var(--red-text) !important; }
+  .q-option:disabled { cursor: default; }
+  .opt-letter { width: 26px; height: 26px; border-radius: 50%; background: var(--gray-bg); border: 1.5px solid var(--gray-border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+  .q-feedback { font-size: 13px; margin-top: 0.875rem; padding: 0.75rem 1rem; border-radius: 8px; line-height: 1.65; display: none; }
+  .q-feedback.show { display: block; }
+  .quiz-nav { margin-top: 0.875rem; display: flex; gap: 8px; justify-content: flex-end; }
+  .quiz-result { background: var(--white); border: 1px solid var(--gray-border); border-radius: var(--radius); padding: 2rem 1.5rem; text-align: center; display: none; box-shadow: var(--shadow); }
+  .result-emoji { font-size: 48px; margin-bottom: 0.75rem; }
+  .result-score { font-size: 56px; font-weight: 700; color: var(--blue); line-height: 1; }
+  .result-label { font-size: 14px; color: var(--text-muted); margin-top: 4px; }
+  .result-badge { display: inline-block; background: var(--blue-light); color: #0D47A1; font-size: 14px; font-weight: 700; padding: 5px 18px; border-radius: 20px; margin: 0.875rem 0; border: 1px solid var(--blue-mid); }
+  .result-msg { font-size: 14px; color: var(--text-secondary); margin-bottom: 1.25rem; line-height: 1.7; max-width: 400px; margin-left: auto; margin-right: auto; }
+
+  /* REFERENSI */
+  .ref-card { background: var(--white); border: 1px solid var(--gray-border); border-radius: var(--radius); padding: 1rem 1.25rem; margin-bottom: 0.75rem; display: flex; gap: 12px; align-items: flex-start; box-shadow: var(--shadow); }
+  .ref-num { width: 30px; height: 30px; background: var(--navy); color: #fff; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .ref-title { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.45; }
+  .ref-source { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+  .ref-note { background: var(--blue-light); border: 1px solid var(--blue-mid); border-radius: 10px; padding: 0.875rem 1.125rem; margin-top: 1.25rem; font-size: 13px; color: #0D47A1; line-height: 1.65; }
+
+  /* FOOTER */
+  .footer { background: var(--navy); color: rgba(255,255,255,0.55); text-align: center; padding: 1.25rem; font-size: 12px; margin-top: 2rem; }
+  .footer strong { color: rgba(255,255,255,0.85); }
+
+  /* UTILS */
+  .mt-1 { margin-top: 0.75rem; }
+  .hidden { display: none !important; }
+
+  @media (max-width: 600px) {
+    .nav { padding: 0 1rem; }
+    .nav-tab { font-size: 12px; padding: 7px 10px; }
+    .hero { padding: 2.5rem 1.25rem 2rem; }
+    .hero h1 { font-size: 24px; }
+    .section { padding: 1.25rem 1rem; }
+    .materi-card { padding: 1rem; }
+    .flashcard-front .fc-q { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">
+    <i class="ti ti-shield-lock"></i>
+    Keamanan &amp; Privasi Digital
+  </div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('beranda')">Beranda</button>
+    <button class="nav-tab" onclick="showPage('materi')">Materi</button>
+    <button class="nav-tab" onclick="showPage('aktivitas')">Aktivitas</button>
+    <button class="nav-tab" onclick="showPage('evaluasi')">Evaluasi</button>
+    <button class="nav-tab" onclick="showPage('referensi')">Referensi</button>
+  </div>
+</nav>
+
+<!-- ===== BERANDA ===== -->
+<div id="page-beranda" class="page active">
+  <div class="hero">
+    <div class="hero-badge"><i class="ti ti-school"></i> Literasi Dasar Digital — Universitas Muhammadiyah Surakarta 2025/2026</div>
+    <h1>Keamanan dan <span>Privasi Digital</span></h1>
+    <p class="hero-desc">Pelajari cara melindungi data pribadi, mengenali ancaman siber, dan menjaga keamanan akun digitalmu di era yang semakin terhubung.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-num">4</div><div class="hero-stat-label">Topik Materi</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">2</div><div class="hero-stat-label">Aktivitas Interaktif</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">5</div><div class="hero-stat-label">Soal Evaluasi</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">±30</div><div class="hero-stat-label">Menit Belajar</div></div>
+    </div>
+  </div>
+
+  <div class="section" style="background:#fff; border-bottom: 1px solid var(--gray-border);">
+    <div class="section-label"><i class="ti ti-target"></i> Tujuan Pembelajaran</div>
+    <div class="tujuan-grid">
+      <div class="tujuan-card">
+        <div class="tujuan-icon"><i class="ti ti-search"></i></div>
+        <div class="tujuan-text">Menjelaskan konsep keamanan dan privasi di dunia digital</div>
+      </div>
+      <div class="tujuan-card">
+        <div class="tujuan-icon"><i class="ti ti-alert-triangle"></i></div>
+        <div class="tujuan-text">Mengidentifikasi berbagai ancaman siber yang umum terjadi</div>
+      </div>
+      <div class="tujuan-card">
+        <div class="tujuan-icon"><i class="ti ti-key"></i></div>
+        <div class="tujuan-text">Menerapkan praktik keamanan digital dalam kehidupan sehari-hari</div>
+      </div>
+      <div class="tujuan-card">
+        <div class="tujuan-icon"><i class="ti ti-file-certificate"></i></div>
+        <div class="tujuan-text">Memahami hak privasi digital berdasarkan regulasi yang berlaku di Indonesia</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="background: var(--gray-bg);">
+    <div class="section-label"><i class="ti ti-book"></i> Deskripsi Bahan Ajar</div>
+    <div class="desc-box">
+      <p>Bahan ajar ini dirancang untuk membekali mahasiswa Universitas Muhammadiyah Surakarta dengan pemahaman mendalam tentang keamanan dan privasi di ruang digital. Mahasiswa akan mempelajari ancaman nyata yang ada di internet, cara melindungi akun dan data pribadi, serta memahami hak-hak mereka sebagai pengguna digital berdasarkan Undang-Undang Perlindungan Data Pribadi (UU No. 27 Tahun 2022).</p>
+      <p style="margin-top: 0.75rem;">Setelah menyelesaikan modul ini, mahasiswa diharapkan mampu bersikap lebih bijak, aman, dan bertanggung jawab dalam beraktivitas di dunia digital — serta mampu membantu orang-orang di sekitar mereka untuk lebih melek digital.</p>
+      <button class="btn-primary" onclick="showPage('materi')">Mulai Belajar <i class="ti ti-arrow-right"></i></button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MATERI ===== -->
+<div id="page-materi" class="page">
+  <div class="section">
+    <div class="section-label"><i class="ti ti-books"></i> Materi Pembelajaran</div>
+    <div class="materi-nav">
+      <button class="materi-btn active" onclick="showMateri('m1', this)"><i class="ti ti-shield"></i> Konsep Dasar</button>
+      <button class="materi-btn" onclick="showMateri('m2', this)"><i class="ti ti-bug"></i> Ancaman Siber</button>
+      <button class="materi-btn" onclick="showMateri('m3', this)"><i class="ti ti-lock"></i> Proteksi Akun</button>
+      <button class="materi-btn" onclick="showMateri('m4', this)"><i class="ti ti-id"></i> Privasi Data</button>
+    </div>
+
+    <div id="m1" class="materi-content active">
+      <div class="materi-card">
+        <h3><i class="ti ti-shield"></i> Apa itu Keamanan Digital?</h3>
+        <p>Keamanan digital (<em>cybersecurity</em>) adalah praktik melindungi sistem komputer, jaringan, dan data dari serangan, kerusakan, atau akses yang tidak sah. Di era serba online ini, hampir semua aspek kehidupan kita terhubung ke internet — mulai dari perbankan, komunikasi, hingga pekerjaan.</p>
+        <div class="tip-box"><i class="ti ti-bulb"></i><span><strong>Analogi sederhana:</strong> Keamanan digital itu seperti mengunci pintu rumahmu. Kamu tidak mengunci pintu karena yakin ada pencuri malam ini — kamu menguncinya karena itu tindakan cerdas dan bertanggung jawab.</span></div>
+      </div>
+      <div class="materi-card">
+        <h3><i class="ti ti-user-shield"></i> Apa itu Privasi Digital?</h3>
+        <p>Privasi digital adalah hak seseorang untuk mengontrol informasi pribadi mereka di dunia digital — termasuk siapa yang bisa mengakses data tersebut, bagaimana data digunakan, dan ke mana data dikirim.</p>
+        <ul>
+          <li><strong>Data pribadi:</strong> nama, alamat, nomor telepon, foto</li>
+          <li><strong>Data perilaku:</strong> riwayat pencarian, lokasi, kebiasaan belanja</li>
+          <li><strong>Data sensitif:</strong> informasi keuangan, kesehatan, keyakinan politik</li>
+        </ul>
+      </div>
+      <div class="materi-card">
+        <h3><i class="ti ti-chart-bar"></i> Mengapa Keamanan & Privasi Digital Penting?</h3>
+        <div class="infografis">
+          <div class="info-item"><div class="info-icon">🔐</div><div class="info-title">Perlindungan Identitas</div><div class="info-desc">Cegah pencurian identitas online</div></div>
+          <div class="info-item"><div class="info-icon">💰</div><div class="info-title">Keamanan Finansial</div><div class="info-desc">Lindungi rekening bank dan dompet digital</div></div>
+          <div class="info-item"><div class="info-icon">🛡️</div><div class="info-title">Reputasi Digital</div><div class="info-desc">Jaga citra diri di dunia maya</div></div>
+          <div class="info-item"><div class="info-icon">⚖️</div><div class="info-title">Hak Hukum</div><div class="info-desc">Diatur UU PDP No. 27 Tahun 2022</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="m2" class="materi-content">
+      <div class="materi-card">
+        <h3><i class="ti ti-fish"></i> Phishing</h3>
+        <p>Phishing adalah upaya penipuan di mana pelaku berpura-pura menjadi entitas terpercaya (bank, pemerintah, marketplace) untuk mencuri informasi sensitif seperti password atau data kartu kredit melalui email, SMS, atau pesan palsu.</p>
+        <div class="kasus-box">
+          <div class="kasus-label">📌 Studi Kasus Nyata</div>
+          <p>Reza menerima email dari "Bank BCA" yang memintanya mengklik link dan memasukkan PIN untuk "verifikasi keamanan". Link tersebut membawa ke website palsu yang identik. Dalam 10 menit, rekening Reza dikuras Rp 15 juta.</p>
+        </div>
+        <div class="warn-box"><i class="ti ti-alert-circle"></i><span>Bank dan institusi resmi <strong>tidak pernah</strong> meminta PIN, password, atau OTP melalui email, SMS, atau telepon.</span></div>
+      </div>
+      <div class="materi-card">
+        <h3><i class="ti ti-virus"></i> Malware & Ransomware</h3>
+        <p>Malware adalah perangkat lunak berbahaya yang dirancang untuk merusak atau mengakses sistem tanpa izin. Ransomware adalah jenis malware yang mengenkripsi file korban dan meminta tebusan (ransom) untuk memulihkannya — seringkali dalam bentuk mata uang kripto.</p>
+        <div class="tip-box"><i class="ti ti-shield-check"></i><span>Selalu perbarui sistem operasi dan antivirus secara rutin. Jangan mengunduh software dari sumber tidak resmi atau membuka lampiran email mencurigakan.</span></div>
+      </div>
+      <div class="materi-card">
+        <h3><i class="ti ti-user-minus"></i> Social Engineering & Doxing</h3>
+        <p>Social engineering memanipulasi psikologi seseorang agar mau memberikan informasi sensitif secara sukarela. Doxing adalah tindakan mengumpulkan dan mempublikasikan informasi pribadi seseorang tanpa izin dengan tujuan intimidasi atau harassment.</p>
+        <div class="warn-box"><i class="ti ti-alert-circle"></i><span>Batasi informasi pribadi yang kamu bagikan di media sosial. Data seperti tanggal lahir, alamat, dan nomor telepon bisa disalahgunakan untuk doxing atau identity theft.</span></div>
+      </div>
+    </div>
+
+    <div id="m3" class="materi-content">
+      <div class="materi-card">
+        <h3><i class="ti ti-key"></i> Membuat Password yang Kuat</h3>
+        <p>Password adalah garis pertahanan pertama akun digitalmu. Password yang lemah bisa diretas dalam hitungan detik menggunakan teknik brute force atau dictionary attack.</p>
+        <ul>
+          <li>Minimal 12 karakter panjangnya</li>
+          <li>Kombinasi huruf besar, huruf kecil, angka, dan simbol</li>
+          <li>Jangan gunakan informasi pribadi (nama, tanggal lahir, nama hewan peliharaan)</li>
+          <li>Gunakan password yang unik untuk setiap akun</li>
+          <li>Pertimbangkan menggunakan password manager seperti Bitwarden (gratis) atau 1Password</li>
+        </ul>
+        <div class="tip-box"><i class="ti ti-bulb"></i><span><strong>Trik passphrase:</strong> Gunakan kalimat pendek yang mudah diingat. Contoh: "KucingAbuku3Ekor!" jauh lebih kuat dari "kucing123" dan lebih mudah diingat dari string karakter acak.</span></div>
+      </div>
+      <div class="materi-card">
+        <h3><i class="ti ti-device-mobile"></i> Autentikasi Dua Faktor (2FA)</h3>
+        <p>2FA menambahkan lapisan keamanan ekstra di luar password. Bahkan jika passwordmu dicuri, peretas tetap tidak bisa masuk tanpa faktor kedua yang hanya kamu miliki.</p>
+        <div class="infografis">
+          <div class="info-item"><div class="info-icon">📱</div><div class="info-title">Authenticator App</div><div class="info-desc">Google/Microsoft Authenticator — paling direkomendasikan</div></div>
+          <div class="info-item"><div class="info-icon">💬</div><div class="info-title">SMS OTP</div><div class="info-desc">Lebih mudah, namun rentan serangan SIM swap</div></div>
+          <div class="info-item"><div class="info-icon">🔑</div><div class="info-title">Security Key</div><div class="info-desc">Hardware key fisik — paling kuat untuk akun kritis</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="m4" class="materi-content">
+      <div class="materi-card">
+        <h3><i class="ti ti-id"></i> UU Perlindungan Data Pribadi (UU PDP)</h3>
+        <p>Indonesia memiliki Undang-Undang Perlindungan Data Pribadi (UU No. 27 Tahun 2022) yang mengatur bagaimana data warga negara boleh dikumpulkan, diproses, dan disimpan oleh perusahaan maupun pemerintah. Ini adalah hak-hak utamamu sebagai subjek data:</p>
+        <ul>
+          <li><strong>Hak akses:</strong> Berhak mengetahui data apa yang dimiliki perusahaan tentang kamu</li>
+          <li><strong>Hak koreksi:</strong> Berhak meminta data yang salah atau tidak akurat untuk dikoreksi</li>
+          <li><strong>Hak hapus:</strong> Berhak meminta datamu dihapus dari sistem (right to be forgotten)</li>
+          <li><strong>Hak portabilitas:</strong> Berhak memindahkan datamu ke penyedia layanan lain</li>
+          <li><strong>Hak keberatan:</strong> Berhak menolak pemrosesan data untuk tujuan tertentu</li>
+        </ul>
+      </div>
+      <div class="materi-card">
+        <h3><i class="ti ti-eye-off"></i> Tips Praktis Menjaga Privasi Online</h3>
+        <ul>
+          <li>Tinjau pengaturan privasi media sosial secara berkala (minimal 3 bulan sekali)</li>
+          <li>Gunakan VPN saat terhubung ke jaringan WiFi publik</li>
+          <li>Aktifkan mode penjelajahan privat untuk aktivitas yang bersifat sensitif</li>
+          <li>Baca kebijakan privasi sebelum menyetujui layanan baru — perhatikan bagian "data sharing"</li>
+          <li>Cabut izin aplikasi yang tidak diperlukan di smartphone secara rutin</li>
+          <li>Gunakan email terpisah untuk daftar layanan online yang tidak terlalu penting</li>
+        </ul>
+        <div class="kasus-box">
+          <div class="kasus-label">📌 Contoh Penerapan</div>
+          <p>Siti selalu memeriksa izin aplikasi baru sebelum menginstal. Ketika sebuah aplikasi flashlight meminta akses ke kontak dan lokasi, Siti langsung menolak izin tersebut dan mencari alternatif lain yang tidak meminta izin berlebihan.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== AKTIVITAS ===== -->
+<div id="page-aktivitas" class="page">
+  <div class="section">
+    <div class="section-label"><i class="ti ti-stars"></i> Aktivitas Interaktif</div>
+    <div class="aktivitas-tabs">
+      <button class="akt-tab active" onclick="showAktivitas('flashcard', this)"><i class="ti ti-cards"></i> Flashcard</button>
+      <button class="akt-tab" onclick="showAktivitas('studikasus', this)"><i class="ti ti-notebook"></i> Studi Kasus</button>
+    </div>
+
+    <!-- FLASHCARD -->
+    <div id="akt-flashcard" class="akt-content active">
+      <p class="fc-hint">Klik kartu untuk membalik dan melihat jawaban. Gunakan tombol navigasi untuk berpindah kartu.</p>
+      <div id="fc-counter" class="fc-counter">Kartu 1 dari 6</div>
+      <div class="flashcard-wrap">
+        <div class="flashcard" id="flashcard" onclick="flipCard()">
+          <div class="flashcard-front">
+            <div class="fc-label">Pertanyaan — klik untuk jawaban</div>
+            <div class="fc-q" id="fc-question"></div>
+          </div>
+          <div class="flashcard-back">
+            <div class="fc-label">Jawaban</div>
+            <div class="fc-a" id="fc-answer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="fc-controls mt-1">
+        <button class="btn-outline" onclick="prevCard()"><i class="ti ti-arrow-left"></i> Sebelumnya</button>
+        <button class="btn-primary" onclick="nextCard()">Berikutnya <i class="ti ti-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- STUDI KASUS -->
+    <div id="akt-studikasus" class="akt-content">
+      <div class="sk-card" id="sk-card">
+        <div class="sk-scenario">
+          <div class="sk-scenario-label">🚨 Skenario</div>
+          <p id="sk-skenario-text"></p>
+        </div>
+        <div class="sk-question" id="sk-question-text"></div>
+        <div class="sk-options" id="sk-options"></div>
+        <div class="sk-feedback" id="sk-feedback"></div>
+        <div class="sk-next-wrap" id="sk-next-wrap">
+          <button class="btn-outline" onclick="nextKasus()">Kasus Berikutnya <i class="ti ti-arrow-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== EVALUASI ===== -->
+<div id="page-evaluasi" class="page">
+  <div class="section">
+    <div class="section-label"><i class="ti ti-clipboard-check"></i> Evaluasi Pemahaman</div>
+    <div id="quiz-container">
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quiz-progress-fill" style="width:0%"></div></div>
+      <div class="quiz-progress-text" id="quiz-progress-text">Soal 1 dari 5</div>
+      <div id="quiz-body"></div>
+      <div class="quiz-nav">
+        <button class="btn-primary hidden" id="btn-next-q" onclick="nextQuestion()">Soal Berikutnya <i class="ti ti-arrow-right"></i></button>
+        <button class="btn-primary hidden" id="btn-finish-q" onclick="finishQuiz()">Lihat Hasil <i class="ti ti-chart-bar"></i></button>
+      </div>
+    </div>
+    <div class="quiz-result" id="quiz-result">
+      <div class="result-emoji" id="result-emoji">🎉</div>
+      <div class="result-score" id="result-score">0/5</div>
+      <div class="result-label">Jawaban Benar</div>
+      <div class="result-badge" id="result-badge">Hasil</div>
+      <div class="result-msg" id="result-msg"></div>
+      <button class="btn-primary" onclick="resetQuiz()"><i class="ti ti-refresh"></i> Coba Lagi</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== REFERENSI ===== -->
+<div id="page-referensi" class="page">
+  <div class="section">
+    <div class="section-label"><i class="ti ti-books"></i> Daftar Referensi</div>
+    <div class="ref-card"><div class="ref-num">1</div><div><div class="ref-title">Undang-Undang Republik Indonesia Nomor 27 Tahun 2022 tentang Perlindungan Data Pribadi</div><div class="ref-source">Sekretariat Negara Republik Indonesia, Jakarta, 2022.</div></div></div>
+    <div class="ref-card"><div class="ref-num">2</div><div><div class="ref-title">National Institute of Standards and Technology (NIST). Cybersecurity Framework Version 2.0</div><div class="ref-source">U.S. Department of Commerce, Gaithersburg, MD, 2024. Tersedia: csrc.nist.gov/pubs/cswp/29/final</div></div></div>
+    <div class="ref-card"><div class="ref-num">3</div><div><div class="ref-title">Badan Siber dan Sandi Negara (BSSN). Panduan Keamanan Digital untuk Masyarakat Indonesia</div><div class="ref-source">BSSN, Jakarta, 2023. Tersedia: bssn.go.id</div></div></div>
+    <div class="ref-card"><div class="ref-num">4</div><div><div class="ref-title">Electronic Frontier Foundation (EFF). Surveillance Self-Defense: Tips, Tools and How-tos for Safer Online Communications</div><div class="ref-source">EFF, San Francisco, 2024. Tersedia: ssd.eff.org</div></div></div>
+    <div class="ref-card"><div class="ref-num">5</div><div><div class="ref-title">Kementerian Komunikasi dan Informatika RI. Indeks Literasi Digital Nasional Indonesia 2023</div><div class="ref-source">Kominfo, Jakarta, 2023. Tersedia: kominfo.go.id</div></div></div>
+    <div class="ref-card"><div class="ref-num">6</div><div><div class="ref-title">Hadnagy, C. Social Engineering: The Science of Human Hacking (2nd Edition)</div><div class="ref-source">Wiley, New Jersey, 2018. ISBN: 978-1119433385</div></div></div>
+    <div class="ref-note"><i class="ti ti-info-circle"></i> <strong>Catatan:</strong> Bahan ajar ini dikembangkan sebagai tugas UAS mata kuliah Pengembangan Bahan Ajar, Program Studi Pendidikan Teknik Informatika, Universitas Muhammadiyah Surakarta, Tahun Akademik 2025/2026. Seluruh konten disusun berdasarkan referensi akademik dan sumber resmi yang dapat dipertanggungjawabkan.</div>
+  </div>
+</div>
+
+<footer class="footer">
+  <strong>Keamanan & Privasi Digital</strong> — Bahan Ajar Digital Interaktif<br>
+  Mata Kuliah Literasi Dasar | Universitas Muhammadiyah Surakarta | 2025/2026
+</footer>
+
+<script>
+// ---- NAVIGASI ----
+const pageOrder = ['beranda','materi','aktivitas','evaluasi','referensi'];
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.nav-tab')[pageOrder.indexOf(id)].classList.add('active');
+  window.scrollTo(0, 0);
+}
+function showMateri(id, btn) {
+  document.querySelectorAll('.materi-content').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.materi-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+function showAktivitas(id, btn) {
+  document.querySelectorAll('.akt-content').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.akt-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('akt-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ---- FLASHCARD ----
+const cards = [
+  { q: 'Apa perbedaan utama antara keamanan digital dan privasi digital?', a: 'Keamanan digital berfokus pada perlindungan sistem dan data dari ancaman eksternal (peretasan, malware). Privasi digital adalah hak seseorang untuk mengontrol siapa yang bisa mengakses informasi pribadinya. Keduanya saling melengkapi dan sama-sama penting.' },
+  { q: 'Apa itu phishing dan bagaimana cara mengenalinya?', a: 'Phishing adalah penipuan di mana pelaku berpura-pura menjadi entitas terpercaya untuk mencuri data sensitif. Ciri-ciri: link mencurigakan, permintaan mendesak, meminta PIN/OTP, pengirim email palsu. Ingat: bank tidak pernah minta PIN lewat pesan!' },
+  { q: 'Apa itu autentikasi dua faktor (2FA) dan mengapa penting?', a: '2FA menambahkan lapisan keamanan kedua setelah password. Bahkan jika password dicuri, peretas tidak bisa masuk tanpa faktor kedua (OTP, authenticator app, atau security key). Authenticator app lebih aman dari SMS karena tidak rentan SIM swap.' },
+  { q: 'Sebutkan 4 syarat password yang kuat!', a: '1. Minimal 12 karakter panjangnya. 2. Kombinasi huruf besar, kecil, angka, dan simbol. 3. Tidak mengandung informasi pribadi (nama, tanggal lahir). 4. Unik — password berbeda untuk setiap akun yang dimiliki.' },
+  { q: 'Apa saja hak yang diberikan UU PDP No. 27 Tahun 2022 kepada warga negara?', a: 'UU PDP memberikan 5 hak utama: (1) Hak akses — tahu data apa yang dipegang perusahaan; (2) Hak koreksi — minta data yang salah diperbaiki; (3) Hak hapus — minta data dihapus; (4) Hak portabilitas — pindahkan data ke layanan lain; (5) Hak keberatan terhadap pemrosesan tertentu.' },
+  { q: 'Mengapa perlu berhati-hati saat menggunakan WiFi publik?', a: 'WiFi publik rentan terhadap serangan Man-in-the-Middle (MitM) di mana peretas bisa menyadap komunikasi yang tidak terenkripsi. Solusi: gunakan VPN untuk mengenkripsi traffic, hindari akses layanan finansial, pastikan website menggunakan HTTPS (ikon gembok di browser).' }
+];
+let currentCard = 0, isFlipped = false;
+function updateCard() {
+  document.getElementById('fc-question').textContent = cards[currentCard].q;
+  document.getElementById('fc-answer').textContent = cards[currentCard].a;
+  document.getElementById('fc-counter').textContent = 'Kartu ' + (currentCard + 1) + ' dari ' + cards.length;
+  const fc = document.getElementById('flashcard');
+  fc.classList.remove('flipped');
+  isFlipped = false;
+}
+function flipCard() { isFlipped = !isFlipped; document.getElementById('flashcard').classList.toggle('flipped', isFlipped); }
+function nextCard() { currentCard = (currentCard + 1) % cards.length; updateCard(); }
+function prevCard() { currentCard = (currentCard - 1 + cards.length) % cards.length; updateCard(); }
+updateCard();
+
+// ---- STUDI KASUS ----
+const kasusData = [
+  {
+    skenario: 'Dian menerima WhatsApp dari nomor tidak dikenal yang mengaku sebagai petugas Kominfo. Pesan itu menyatakan akun WhatsApp Dian akan diblokir jika tidak mengirimkan kode OTP 6 digit yang baru saja diterimanya via SMS dalam waktu 5 menit.',
+    pertanyaan: 'Apa yang sebaiknya dilakukan Dian?',
+    options: ['A. Segera kirimkan kode OTP agar akun tidak diblokir', 'B. Tanyakan dulu nama lengkap dan nomor ID petugas tersebut', 'C. Abaikan pesan, jangan kirim OTP, dan laporkan nomor tersebut', 'D. Kirimkan kode setelah mengecek apakah nomor terlihat resmi'],
+    correct: 2,
+    feedbackCorrect: '✅ Tepat sekali! Ini adalah serangan social engineering klasik untuk mengambil alih akun (account takeover). Kode OTP bersifat sangat rahasia dan TIDAK BOLEH dibagikan ke siapapun — termasuk pihak yang mengaku dari instansi resmi. Kominfo tidak pernah menghubungi warga via WhatsApp untuk meminta OTP. Segera laporkan nomor tersebut sebagai spam.',
+    feedbackWrong: '❌ Kurang tepat. Ini adalah taktik social engineering yang sangat umum. Kode OTP adalah kode rahasia satu kali pakai yang hanya boleh digunakan sendiri — siapapun yang memintanya sedang mencoba mengambil alih akunmu. Pilihan terbaik adalah mengabaikan, tidak mengirim OTP, dan melaporkan nomor tersebut.'
+  },
+  {
+    skenario: 'Budi baru saja menginstal aplikasi belanja online baru di smartphonenya. Saat pertama kali dibuka, aplikasi meminta izin akses ke: kamera, lokasi, kontak, mikrofon, dan penyimpanan internal.',
+    pertanyaan: 'Izin akses mana yang TIDAK masuk akal untuk diberikan ke aplikasi belanja?',
+    options: ['A. Kamera — untuk memfoto produk yang ingin dijual', 'B. Lokasi — untuk kalkulasi estimasi ongkos kirim', 'C. Mikrofon dan akses kontak — tidak dibutuhkan fungsi belanja', 'D. Penyimpanan — untuk menyimpan bukti transaksi dan invoice'],
+    correct: 2,
+    feedbackCorrect: '✅ Benar! Aplikasi belanja memang membutuhkan kamera (foto produk), lokasi (estimasi ongkir), dan penyimpanan (invoice). Namun mikrofon dan akses ke seluruh kontak telepon tidak diperlukan untuk fungsi belanja. Izin berlebihan ini bisa digunakan untuk menyadap percakapan atau mengumpulkan data kontakmu untuk keperluan spam dan telemarketing.',
+    feedbackWrong: '❌ Kurang tepat. Pikirkan apakah izin tersebut benar-benar diperlukan oleh fungsi utama aplikasi belanja. Mikrofon dan akses seluruh kontak tidak ada hubungannya dengan aktivitas berbelanja — ini adalah "permission creep" yang harus diwaspadai sebagai potensi pelanggaran privasi.'
+  }
+];
+let currentKasus = 0, kasusAnswered = false;
+function renderKasus() {
+  const k = kasusData[currentKasus];
+  document.getElementById('sk-skenario-text').textContent = k.skenario;
+  document.getElementById('sk-question-text').textContent = k.pertanyaan;
+  const opts = document.getElementById('sk-options');
+  opts.innerHTML = k.options.map((o, i) => `<button class="sk-option" onclick="answersKasus(${i})">${o}</button>`).join('');
+  document.getElementById('sk-feedback').className = 'sk-feedback';
+  document.getElementById('sk-feedback').textContent = '';
+  document.getElementById('sk-next-wrap').className = 'sk-next-wrap';
+  kasusAnswered = false;
+}
+function answersKasus(idx) {
+  if (kasusAnswered) return;
+  kasusAnswered = true;
+  const k = kasusData[currentKasus];
+  const opts = document.querySelectorAll('.sk-option');
+  opts.forEach((o, i) => { o.disabled = true; if (i === k.correct) o.classList.add('correct'); else if (i === idx) o.classList.add('wrong'); });
+  const fb = document.getElementById('sk-feedback');
+  const isCorrect = idx === k.correct;
+  fb.className = 'sk-feedback ' + (isCorrect ? 'show-correct' : 'show-wrong');
+  fb.textContent = isCorrect ? k.feedbackCorrect : k.feedbackWrong;
+  if (currentKasus < kasusData.length - 1) document.getElementById('sk-next-wrap').className = 'sk-next-wrap visible';
+}
+function nextKasus() { currentKasus++; renderKasus(); }
+renderKasus();
+
+// ---- EVALUASI ----
+const quizData = [
+  { q: 'Teknik serangan siber di mana pelaku berpura-pura menjadi pihak terpercaya untuk mencuri informasi sensitif disebut...', opts: ['Malware', 'Phishing', 'Ransomware', 'Doxing'], correct: 1, exp: 'Phishing adalah teknik manipulasi di mana pelaku menyamar sebagai entitas terpercaya (bank, pemerintah, marketplace) untuk mencuri data seperti password dan nomor kartu kredit melalui pesan atau website palsu.' },
+  { q: 'Manakah dari berikut ini yang merupakan contoh password paling KUAT?', opts: ['password123', 'budi1998', 'K3amanan!Digital#2024', 'kucing'], correct: 2, exp: '"K3amanan!Digital#2024" memenuhi semua kriteria: lebih dari 12 karakter, mengandung huruf besar/kecil, angka, dan simbol khusus, serta tidak menggunakan informasi pribadi yang mudah ditebak.' },
+  { q: 'Undang-Undang Perlindungan Data Pribadi (UU PDP) di Indonesia diatur dalam...', opts: ['UU No. 11 Tahun 2008 (ITE)', 'UU No. 19 Tahun 2016', 'UU No. 27 Tahun 2022', 'UU No. 36 Tahun 2009'], correct: 2, exp: 'UU No. 27 Tahun 2022 tentang Perlindungan Data Pribadi adalah regulasi khusus pertama Indonesia yang mengatur pengelolaan dan perlindungan data pribadi warga negara.' },
+  { q: 'Metode autentikasi dua faktor (2FA) yang paling aman untuk digunakan adalah...', opts: ['Verifikasi via SMS OTP', 'Authenticator App (Google/Microsoft Authenticator)', 'Konfirmasi via email', 'Pertanyaan keamanan (security question)'], correct: 1, exp: 'Authenticator App lebih aman dari SMS karena tidak rentan terhadap SIM swapping. Kode berubah setiap 30 detik dan dihasilkan secara lokal di perangkat — tidak dikirim melalui jaringan yang bisa disadap.' },
+  { q: 'Jika kamu terpaksa menggunakan WiFi publik, tindakan paling efektif untuk melindungi data adalah...', opts: ['Aktifkan mode incognito di browser', 'Gunakan VPN (Virtual Private Network)', 'Matikan Bluetooth dan NFC', 'Ganti semua password setelah selesai menggunakan WiFi'], correct: 1, exp: 'VPN mengenkripsi seluruh lalu lintas internet sehingga bahkan jika ada serangan Man-in-the-Middle di WiFi publik, data yang tersadap tidak dapat dibaca oleh penyerang.' }
+];
+let currentQ = 0, score = 0, answered = [];
+function renderQuestion() {
+  const q = quizData[currentQ];
+  document.getElementById('quiz-progress-fill').style.width = (currentQ / quizData.length * 100) + '%';
+  document.getElementById('quiz-progress-text').textContent = 'Soal ' + (currentQ + 1) + ' dari ' + quizData.length;
+  document.getElementById('btn-next-q').className = 'btn-primary hidden';
+  document.getElementById('btn-finish-q').className = 'btn-primary hidden';
+  const letters = ['A','B','C','D'];
+  document.getElementById('quiz-body').innerHTML = `
+    <div class="quiz-card">
+      <div class="q-num">Soal ${currentQ + 1}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options">${q.opts.map((o,i)=>`<button class="q-option" onclick="selectAnswer(${i})"><span class="opt-letter">${letters[i]}</span>${o}</button>`).join('')}</div>
+      <div class="q-feedback" id="q-feedback"></div>
+    </div>`;
+}
+function selectAnswer(idx) {
+  if (answered[currentQ] !== undefined) return;
+  answered[currentQ] = idx;
+  const q = quizData[currentQ];
+  const isCorrect = idx === q.correct;
+  if (isCorrect) score++;
+  document.querySelectorAll('.q-option').forEach((o, i) => {
+    o.disabled = true;
+    if (i === q.correct) o.classList.add('correct');
+    else if (i === idx) o.classList.add('wrong');
+  });
+  const fb = document.getElementById('q-feedback');
+  fb.className = 'q-feedback show';
+  fb.style.background = isCorrect ? '#E8F5E9' : '#FFEBEE';
+  fb.style.color = isCorrect ? '#1B5E20' : '#B71C1C';
+  fb.style.border = isCorrect ? '1px solid #A5D6A7' : '1px solid #EF9A9A';
+  fb.textContent = (isCorrect ? '✅ Benar! ' : '❌ Kurang tepat. ') + q.exp;
+  if (currentQ < quizData.length - 1) document.getElementById('btn-next-q').className = 'btn-primary';
+  else document.getElementById('btn-finish-q').className = 'btn-primary';
+}
+function nextQuestion() { currentQ++; renderQuestion(); }
+function finishQuiz() {
+  document.getElementById('quiz-container').style.display = 'none';
+  const res = document.getElementById('quiz-result');
+  res.style.display = 'block';
+  document.getElementById('result-score').textContent = score + '/5';
+  const pct = score / 5 * 100;
+  let emoji, badge, msg;
+  if (pct >= 80) { emoji = '🎉'; badge = 'Sangat Baik!'; msg = 'Luar biasa! Kamu memiliki pemahaman yang sangat baik tentang keamanan dan privasi digital. Teruslah menerapkan praktik-praktik ini dalam kehidupan sehari-hari.'; }
+  else if (pct >= 60) { emoji = '👍'; badge = 'Cukup Baik'; msg = 'Bagus! Kamu sudah memahami dasar-dasar keamanan digital. Tinjau kembali materi yang belum dikuasai dan ulangi evaluasi untuk meningkatkan pemahamanmu.'; }
+  else { emoji = '📚'; badge = 'Perlu Belajar Lagi'; msg = 'Jangan menyerah! Keamanan digital adalah keterampilan penting. Baca kembali semua materi, pelajari studi kasusnya, dan coba kembali evaluasi ini.'; }
+  document.getElementById('result-emoji').textContent = emoji;
+  document.getElementById('result-badge').textContent = badge;
+  document.getElementById('result-msg').textContent = msg;
+}
+function resetQuiz() {
+  currentQ = 0; score = 0; answered = [];
+  document.getElementById('quiz-container').style.display = 'block';
+  document.getElementById('quiz-result').style.display = 'none';
+  renderQuestion();
+}
+renderQuestion();
+</script>
+</body>
+</html>
